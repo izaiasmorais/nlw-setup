@@ -8,7 +8,7 @@
 
 ## 📃 Sobre o projeto
 
-Aplicação que gerencia o envio de notificações para os demais serviçõs de uma aplicação.
+Uma aplicação de controle de hábitos completa, que utiliza as tecnologias mais modernas do mercado.
 
 ### Funcionalidades
 
