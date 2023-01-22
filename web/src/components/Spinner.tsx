@@ -6,13 +6,11 @@ export function Spinner() {
       <Oval
         height={30}
         width={30}
-        wrapperStyle={{}}
-        wrapperClass=""
         visible={true}
         ariaLabel="oval-loading"
         secondaryColor="#c4b5fd"
         strokeWidth={4}
-        strokeWidthSecondary={2}
+        strokeWidthSecondary={4}
         color="#8b5cf6"
       />
 
