@@ -22,8 +22,5 @@
     "@prisma/client": "^4.9.0",
     "dayjs": "^1.11.7",
     "zod": "^3.20.2"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   }
 }

@@ -26,7 +26,7 @@ export function SummaryTable() {
     data: summary,
     isFetching,
     isError,
-  } = useQuery('get-summary', async () => {
+  } = useQuery('summary', async () => {
     const response = await api.get<Summary[]>('/summary');
 
     return response.data;
@@ -79,7 +79,7 @@ export function SummaryTable() {
       {isError && (
         <div className="h-8 font-medium flex gap-2 items-center justify-center">
           <WarningCircle size={24} className="text-red-600" />
-          Ocorreu um erro ao buscar os dados da API!
+          Ocorreu um erro ao buscar os dados da API.
         </div>
       )}
 

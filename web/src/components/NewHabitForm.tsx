@@ -1,7 +1,7 @@
 import { Check } from 'phosphor-react';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { FormEvent, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { api } from '../services/axiosClient';
 import { Oval } from 'react-loader-spinner';
 import { toast } from 'react-hot-toast';
@@ -20,6 +20,8 @@ export function NewHabitForm() {
   const [weekDays, setWeekDays] = useState<number[]>([]);
   const [title, setTitle] = useState('');
 
+  const queryClient = useQueryClient();
+
   const { isLoading, mutate } = useMutation(
     async () => {
       await api.post('/habits', {
@@ -28,7 +30,7 @@ export function NewHabitForm() {
       });
     },
     {
-      onSuccess: () => console.log('success'),
+      onSuccess: () => queryClient.invalidateQueries('summary'),
     }
   );
 
@@ -95,7 +97,7 @@ export function NewHabitForm() {
             <div
               className="h-8 w-8 rounded-lg flex items-center justify-center
 							bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500
-							group-data-[state=checked]:border-green-500"
+							group-data-[state=checked]:border-green-500 hover:bg-zinc-800"
             >
               <Checkbox.Indicator>
                 <Check size={20} color="white" />
