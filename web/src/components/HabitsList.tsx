@@ -7,6 +7,7 @@ import { api } from '../services/axiosClient';
 
 interface Props {
   date: Date;
+  handleCompletedChanged: (completed: number) => void;
 }
 
 interface HabitsInfo {
@@ -18,7 +19,7 @@ interface HabitsInfo {
   completedHabits: string[];
 }
 
-export function HabitsList({ date }: Props) {
+export function HabitsList({ date, handleCompletedChanged }: Props) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
   async function getHabitsInfo() {
@@ -31,10 +32,25 @@ export function HabitsList({ date }: Props) {
     setHabitsInfo(response.data);
   }
 
-  const { mutate } = useMutation(async (id: string) => {
-    await api.patch(`/habits/${id}/toggle`);
+  const { mutate } = useMutation(async (habitId: string) => {
+    await api.patch(`/habits/${habitId}/toggle`);
 
-    getHabitsInfo();
+    const isHabitCompleted = habitsInfo!.completedHabits.includes(habitId);
+
+    let completedHabits: string[] = [];
+
+    if (isHabitCompleted) {
+      completedHabits = habitsInfo!.completedHabits.filter((id) => id !== habitId);
+    } else {
+      completedHabits = [...habitsInfo!.completedHabits, habitId];
+    }
+
+    setHabitsInfo({
+      possibleHabits: habitsInfo!.possibleHabits,
+      completedHabits,
+    });
+
+    handleCompletedChanged(completedHabits.length);
   });
 
   useEffect(() => {
