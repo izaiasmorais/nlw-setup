@@ -12,7 +12,7 @@
 
 ## 📃 Sobre o projeto
 
-Uma aplicação de controle de hábitos completa, que utiliza as tecnologias mais modernas do mercado.
+Uma aplicação de controle de hábitos, que utiliza as tecnologias mais modernas do mercado.
 
 ### Funcionalidades
 
