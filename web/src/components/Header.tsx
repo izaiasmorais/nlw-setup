@@ -12,7 +12,9 @@ export function Header() {
         <Dialog.Trigger
           type="button"
           className="border-2 border-violet-500 items-center gap-3
-					font-semibold rounded-lg px-6 py-4 flex hover:border-violet-300"
+					font-semibold rounded-lg px-6 py-4 flex hover:border-violet-300
+					transition-colors focus:outline-none focus:ring-2 focus:ring-violet-700
+					focus:ring-offset-background focus:ring-offset-2"
           onClick={() => {}}
         >
           <Plus size={20} className="text-violet-500" />

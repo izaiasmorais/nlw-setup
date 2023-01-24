@@ -22,7 +22,7 @@ interface HabitsInfo {
 export function HabitsList({ date, handleCompletedChanged }: Props) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
-  async function getHabitsInfo() {
+  const { mutate: getHabitsData } = useMutation(async () => {
     const response = await api.get<HabitsInfo>('/day', {
       params: {
         date: date.toISOString(),
@@ -30,9 +30,9 @@ export function HabitsList({ date, handleCompletedChanged }: Props) {
     });
 
     setHabitsInfo(response.data);
-  }
+  });
 
-  const { mutate } = useMutation(async (habitId: string) => {
+  const { mutate: toggleHabitStatus } = useMutation(async (habitId: string) => {
     await api.patch(`/habits/${habitId}/toggle`);
 
     const isHabitCompleted = habitsInfo!.completedHabits.includes(habitId);
@@ -53,11 +53,11 @@ export function HabitsList({ date, handleCompletedChanged }: Props) {
     handleCompletedChanged(completedHabits.length);
   });
 
-  useEffect(() => {
-    getHabitsInfo();
-  }, []);
-
   const isDateInPast = dayjs(date).endOf('day').isBefore(new Date());
+
+  useEffect(() => {
+    getHabitsData();
+  }, []);
 
   return (
     <div className="mt-6 flex flex-col gap-3">
@@ -65,9 +65,9 @@ export function HabitsList({ date, handleCompletedChanged }: Props) {
         <Checkbox.Root
           key={habit.id}
           checked={habitsInfo.completedHabits.includes(habit.id)}
-          onCheckedChange={() => mutate(habit.id)}
+          onCheckedChange={() => toggleHabitStatus(habit.id)}
           disabled={isDateInPast}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group focus:outline-none"
         >
           <div
             className="h-8 w-8 rounded-lg flex items-center justify-center
